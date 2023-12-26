@@ -1,0 +1,22 @@
+{% extends 'learning_logs/base.html' %}
+
+
+{% block content %}
+    <h2 class="mb-3">Add a new topic</h2>
+    <form action="{% url 'learning_logs:new_topic' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label}}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small>{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Add topic</button>
+    </form>
+{% endblock content %}
